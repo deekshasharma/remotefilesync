@@ -4,21 +4,20 @@ import java.io.*;
 
 public class FileStreamToBytes {
 
-    private static final String FILEPATH = "./geneticcode.txt";
 
     public static void main(String[] args) throws FileNotFoundException {
         FileStreamToBytes stringToBytes = new FileStreamToBytes();
-        stringToBytes.convertToBytes();
-
+        String filepath = "./geneticcode.txt";
+        stringToBytes.convertToBytes(filepath);
     }
 
     /**
      * Convert the file contents to a byte array
      * @throws FileNotFoundException
      */
-    public byte[] convertToBytes() throws FileNotFoundException {
+    public byte[] convertToBytes(String filepath) throws FileNotFoundException {
 
-        File dataToTransmit = new File(FILEPATH);
+        File dataToTransmit = new File(filepath);
         FileInputStream fileInputStream = new FileInputStream(dataToTransmit);
         byte[] byteStream = new byte[(int)dataToTransmit.length()];
 
@@ -31,7 +30,6 @@ public class FileStreamToBytes {
             System.out.println("ByteStream is empty");
         }
         return byteStream;
-
     }
 
     /**

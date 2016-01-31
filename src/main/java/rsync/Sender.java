@@ -6,34 +6,44 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientMachine {
+public class Sender {
 
     private static final int MIN_BLOCK_SIZE = 500;
     private static final int MAX_BLOCK_SIZE = 1000;
 
 
-    /**
-     * Equally divides the file bytes to blocks of size MIN_BLOCK_SIZE
-     * @return
-     * @throws FileNotFoundException
-     */
-    private List<byte[]> splitBytes() throws FileNotFoundException {
-        FileStreamToBytes fileStreamToBytes = new FileStreamToBytes();
-        byte[] byteStream = fileStreamToBytes.convertToBytes();
-        List<byte[]> bytesBlocks = new ArrayList<byte[]>();
 
-        int count = 0;
-        byte[] byteBlock = new byte[MIN_BLOCK_SIZE];
-        for (int i = 0; i < byteStream.length; i++){
-            if (count == MAX_BLOCK_SIZE - 1){
-                bytesBlocks.add(byteBlock);
-                count = 0;
-                byteBlock = new byte[MIN_BLOCK_SIZE];
-            }
-            byteBlock[count] = byteStream[i];
-            count++;
+
+    /**
+     * Split the file data into blocks of fixed size
+     * @param data
+     * @return List of blocks with same size except the last block.
+     */
+    private static List<byte[]> splitBytes(byte[] data){
+        List<byte[]> allBlocks = new ArrayList<byte[]>();
+        int len = data.length;
+        if (len <= MIN_BLOCK_SIZE){
+            allBlocks.add(data);
+            return allBlocks;
         }
-        return bytesBlocks;
+        int j = 0;
+        byte[] block = new byte[MIN_BLOCK_SIZE];
+        for(int i = 0; i< data.length; i++){
+            if (j < block.length){
+                block[j] = data[i];
+                j++;
+            }
+            else {
+                allBlocks.add(block);
+                int size = (((len - i) <= MIN_BLOCK_SIZE) ?(len-i):MIN_BLOCK_SIZE);
+                block = new byte[size];
+                j = 0;
+                block[j] = data[i];
+                j++;
+            }
+        }
+        allBlocks.add(block);
+        return allBlocks;
     }
 
     /**
@@ -51,17 +61,8 @@ public class ClientMachine {
             }catch (NoSuchAlgorithmException e){
                 throw new RuntimeException(e);
             }
-
         }
         return hashSignatures;
-    }
-
-    private void buildSearchIndex(){
-
-    }
-
-    private void getIndexOfSortedSignatures(){
-
     }
 
 
