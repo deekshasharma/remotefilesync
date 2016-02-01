@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Signatures {
 
-    //    private final int M = 65536;
-    private final int M = 10; /// FOR TESTING PURPOSES
+        private final int M = 65536;
+//    private final int M = 10; /// FOR TESTING PURPOSES
 
     /**
      * Calculate the rolling checksum of a given block
@@ -32,8 +32,7 @@ public class Signatures {
 
 
     /**
-     * Calculate the strong hash using MD5 for a given block
-     *
+     * Computes the 128 bit strong hash signature using MD5 for a given block
      * @param block an array containing few hundred bytes
      * @return an array of bytes for the resulting hash value
      */

@@ -2,8 +2,8 @@ package rsync;
 
 public class BlockSignature {
 
-    private int weakSignature;
-    private byte[] strongSignature;
+     int weakSignature;
+     byte[] strongSignature;
 
     public BlockSignature(int weakSignature, byte[] strongSignature){
         this.weakSignature = weakSignature;

@@ -13,15 +13,23 @@ public class test {
     private static final int MAXSIZE = 5;
 
     public static void main(String[] args) {
-        byte[] block1 = new byte[]{105,32,97,109,32,104,97,112,112,121,32,104};
-        byte[] md1 = (getMd5Checksum(block1));
-
-        byte[] block2 = new byte[]{105,32,97,109,32,104,97,112,112,121,32,104};
-        byte[] md2 = (getMd5Checksum(block2));
-
-        System.out.println(Arrays.equals(md1,md2));
-
+        Signatures checksumSignature = new Signatures();
+        byte[] block = new byte[]{105,32,97,109,32,104,97,112,112,121,32,104};
+        System.out.println(checksumSignature.getRollingChecksum(0,3,block));
+//        int rollingChecksum = checksumSignature.getRollingChecksum(0,3,block);
+//        System.out.println((byte)rollingChecksum);
     }
+
+//    public static void main(String[] args) {
+//        byte[] block1 = new byte[]{105,32,97,109,32,104,97,112,112,121,32,104};
+//        byte[] md1 = (getMd5Checksum(block1));
+//
+//        byte[] block2 = new byte[]{105,32,97,109,32,104,97,112,112,121,32,104};
+//        byte[] md2 = (getMd5Checksum(block2));
+//
+//        System.out.println(Arrays.equals(md1,md2));
+//
+//    }
 
 
 
@@ -88,22 +96,22 @@ public class test {
      * @return
      * @throws FileNotFoundException
      */
-    private List<byte[]> splitBytes() throws FileNotFoundException {
-        FileStreamToBytes fileStreamToBytes = new FileStreamToBytes();
-        byte[] byteStream = fileStreamToBytes.convertToBytes();
-        List<byte[]> bytesBlocks = new ArrayList<byte[]>();
-
-        int count = 0;
-        byte[] byteBlock = new byte[MIN_BLOCK_SIZE];
-        for (int i = 0; i < byteStream.length; i++){
-            if (count == MAX_BLOCK_SIZE - 1){
-                bytesBlocks.add(byteBlock);
-                count = 0;
-                byteBlock = new byte[MIN_BLOCK_SIZE];
-            }
-            byteBlock[count] = byteStream[i];
-            count++;
-        }
-        return bytesBlocks;
-    }
+//    private List<byte[]> splitBytes() throws FileNotFoundException {
+//        FileStreamToBytes fileStreamToBytes = new FileStreamToBytes();
+//        byte[] byteStream = fileStreamToBytes.convertToBytes();
+//        List<byte[]> bytesBlocks = new ArrayList<byte[]>();
+//
+//        int count = 0;
+//        byte[] byteBlock = new byte[MIN_BLOCK_SIZE];
+//        for (int i = 0; i < byteStream.length; i++){
+//            if (count == MAX_BLOCK_SIZE - 1){
+//                bytesBlocks.add(byteBlock);
+//                count = 0;
+//                byteBlock = new byte[MIN_BLOCK_SIZE];
+//            }
+//            byteBlock[count] = byteStream[i];
+//            count++;
+//        }
+//        return bytesBlocks;
+//    }
 }

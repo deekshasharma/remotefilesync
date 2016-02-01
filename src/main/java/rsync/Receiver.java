@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This is the Receiver class that should be able to receive a copy of file from the Sender a
- * nd be able to update the file same as sender's copy.
+ * This class that should be able to receive a copy of file from the Sender
+ * and be able to update the file same as sender's copy.
  */
 public class Receiver {
     private static final int MIN_BLOCK_SIZE = 500;
@@ -50,9 +50,9 @@ public class Receiver {
     }
 
     /**
-     *
-     * @param filepath
-     * @return
+     * Generate the signatures for a file.
+     * @param filepath path to the file
+     * @return List of all signatures for each block of the file
      * @throws FileNotFoundException
      */
     public List<BlockSignature> generateSignatures(String filepath) throws FileNotFoundException {

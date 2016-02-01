@@ -1,71 +1,115 @@
 package rsync;
 
-import java.io.FileNotFoundException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
+import jdk.nashorn.internal.ir.Block;
 
+import java.io.FileNotFoundException;
+import java.util.*;
+
+/**
+ * This class refers to the source that has the most recently updated copy of the file. It sends the delta to the receiver,
+ * using which it re-constructs the new file.
+ */
 public class Sender {
 
     private static final int MIN_BLOCK_SIZE = 500;
     private static final int MAX_BLOCK_SIZE = 1000;
 
+    public void sendDelta(){
+
+    }
+
+    /**
+     *
+     * @param allBlockSignatures
+     * @return
+     */
+    public Map<Integer,Integer> buildIndexTable(List<BlockSignature> allBlockSignatures){
+        Map<Integer,Integer> indexTable = new HashMap<Integer, Integer>();
+        for (int i = 0; i < allBlockSignatures.size(); i++){
+            int weakSignature = allBlockSignatures.get(i).weakSignature;
+            if (!indexTable.containsKey(weakSignature)){
+                indexTable.put(weakSignature,i);
+            }
+        }return indexTable;
+    }
+
+    /**
+     * Search for the matching block.
+     * @param filepath
+     * @param indexTable
+     * @param allBlockSignatures
+     * @throws FileNotFoundException
+     */
+    List<Byte> search(String filepath,Map<Integer,Integer> indexTable,List<BlockSignature> allBlockSignatures) throws FileNotFoundException {
+        // Convert the file at the given path to stream of bytes
+        FileStreamToBytes fileStreamToBytes = new FileStreamToBytes();
+        byte[] byteStream = fileStreamToBytes.convertToBytes(filepath);
+        List<Byte> matched = new ArrayList<Byte>();
+
+        for (int i = 0; i < byteStream.length; i++){
+            int byteOffset = i;
+            int length = byteOffset + MIN_BLOCK_SIZE - 1;
+            byte[] block = extractBlock(byteOffset,length,byteStream);
+            int initialWeakHash = getWeakHash(byteOffset,block.length-1,block);
+            if (indexTable.containsKey(initialWeakHash)){
+                int signatureIndex = indexTable.get(initialWeakHash); // if weak signature match, compute strong signature
+                if (Arrays.equals(allBlockSignatures.get(signatureIndex).strongSignature,getStrongHash(block))){
+                    // continue to search in the allBlockSignatures linearly to find the next match;
+                }
+
+            }else { // Add the delta to the matched.
+                    matched.add(byteStream[i]);
+            }
+
+        }return matched;
+
+    }
+
+    /**
+     * Extract a block from the byte stream given the start and end indexes
+     * @param start
+     * @param end
+     * @param byteStream
+     * @return
+     */
+    byte[] extractBlock(int start, int end, byte[] byteStream){
+        byte[] block = new byte[end - start+1];
+        int index = 0;
+        for (int i = start; i<= end; i++){
+            block[index] = byteStream[i];
+            index++;
+        }return block;
+    }
+
+
+    /**
+     *
+     * @param k
+     * @param l
+     * @param block
+     * @return
+     */
+    int getWeakHash(int k, int l, byte[] block){
+        Signatures signatures = new Signatures();
+        return signatures.getRollingChecksum(k,l,block);
+    }
+
+    /**
+     *
+     * @param block
+     * @return
+     */
+    byte[] getStrongHash(byte[] block){
+        Signatures signatures = new Signatures();
+        return signatures.getMd5Checksum(block);
+    }
 
 
 
     /**
-     * Split the file data into blocks of fixed size
-     * @param data
-     * @return List of blocks with same size except the last block.
+     *
+     * @param byteStream
      */
-    private static List<byte[]> splitBytes(byte[] data){
-        List<byte[]> allBlocks = new ArrayList<byte[]>();
-        int len = data.length;
-        if (len <= MIN_BLOCK_SIZE){
-            allBlocks.add(data);
-            return allBlocks;
-        }
-        int j = 0;
-        byte[] block = new byte[MIN_BLOCK_SIZE];
-        for(int i = 0; i< data.length; i++){
-            if (j < block.length){
-                block[j] = data[i];
-                j++;
-            }
-            else {
-                allBlocks.add(block);
-                int size = (((len - i) <= MIN_BLOCK_SIZE) ?(len-i):MIN_BLOCK_SIZE);
-                block = new byte[size];
-                j = 0;
-                block[j] = data[i];
-                j++;
-            }
-        }
-        allBlocks.add(block);
-        return allBlocks;
-    }
-
-    /**
-     * Computes the 128 bit hash signature for each of the given blocks
-     * @param byteBlocks List of the blocks of data. Each block is a byte array of size MIN_BLOCK_SIZE
-     * @return List of 128-bit hash signature for each block
-     */
-    private List<byte[]> getHashSignature(List<byte[]> byteBlocks){
-        List<byte[]> hashSignatures = new ArrayList<byte[]>();
-        for (byte[] block: byteBlocks){
-            try{
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                byte[] hashSignature = md.digest(block);
-                hashSignatures.add(hashSignature);
-            }catch (NoSuchAlgorithmException e){
-                throw new RuntimeException(e);
-            }
-        }
-        return hashSignatures;
-    }
-
-
     private static void displayByteToString(byte[] byteStream){
         String s = new String(byteStream);
         System.out.println("Decrypted Text = "+s);
