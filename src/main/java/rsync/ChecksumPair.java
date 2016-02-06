@@ -28,9 +28,9 @@ public class ChecksumPair extends Object{
 
 
     /**
-     *
+     * Compare if the 2 objects are same.
      * @param object
-     * @return
+     * @return boolean value if 2 checksumpair objects have the same strong and weak signature
      */
     public boolean equals(Object object){
         return true;
@@ -38,23 +38,23 @@ public class ChecksumPair extends Object{
 
 
     /**
-     *
-     * @return
+     * Get the value of the weak checksum
+     * @return integer value of the weak checksum
      */
     public int getWeakChecksum() {
         return weakChecksum;
     }
 
     /**
-     *
-     * @return
+     * Get the byte array of string checksum
+     * @return byte array of the hash value computed by MD5
      */
     public byte[] getStrongChecksum() {
         return strongChecksum;
     }
 
     /**
-     *
+     * Return the sequence number of the block, this checksum belongs to
      * @return
      */
     public int getBlockSequenceNumber() {
@@ -62,16 +62,16 @@ public class ChecksumPair extends Object{
     }
 
     /**
-     *
-     * @return
+     * Get the blockOffset for this checksum
+     * @return long value of the block offset
      */
     public long getBlockOffset() {
         return blockOffset;
     }
 
     /**
-     *
-     * @return
+     * Get the length of the data block,this checksumpair belong to
+     * @return integer value of the length
      */
     public int getLengthOfBlock() {
         return lengthOfBlock;
