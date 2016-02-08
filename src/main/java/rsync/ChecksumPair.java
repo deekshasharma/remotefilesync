@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  *
  */
-public class ChecksumPair extends Object{
+public class ChecksumPair extends Object {
 
     private int weakChecksum;
     private byte[] strongChecksum;
@@ -29,7 +29,7 @@ public class ChecksumPair extends Object{
 
     /**
      * Compare if the 2 objects are same.
-     * @param object
+     * @param object given checksumpair object
      * @return boolean value if 2 checksumpair objects have the same strong and weak signature
      */
     public boolean equals(Object object){
@@ -87,4 +87,5 @@ public class ChecksumPair extends Object{
                 ", lengthOfBlock=" + lengthOfBlock +
                 '}';
     }
+
 }

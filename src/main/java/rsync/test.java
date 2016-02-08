@@ -1,11 +1,9 @@
 package rsync;
 
 import java.io.FileNotFoundException;
-import java.io.PrintStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class test {
@@ -14,10 +12,10 @@ public class test {
 
     public static void main(String[] args) {
         Signatures checksumSignature = new Signatures();
-        byte[] block = new byte[]{105,32,97,109,32,104,97,112,112,121,32,104};
-        System.out.println(checksumSignature.getRollingChecksum(0,3,block));
-//        int rollingChecksum = checksumSignature.getRollingChecksum(0,3,block);
-//        System.out.println((byte)rollingChecksum);
+        byte[] block = new byte[]{127,127,127,109,32,104,97,112,112,121,32,104};
+        String binaryHash = Integer.toBinaryString(checksumSignature.getRollingChecksum(0, 3, block));
+        System.out.println(binaryHash);
+        System.out.println(binaryHash.length());
     }
 
 //    public static void main(String[] args) {
@@ -96,7 +94,7 @@ public class test {
      * @return
      * @throws FileNotFoundException
      */
-//    private List<byte[]> splitBytes() throws FileNotFoundException {
+//    private List<byte[]> splitIntoBlocks() throws FileNotFoundException {
 //        FileStreamToBytes fileStreamToBytes = new FileStreamToBytes();
 //        byte[] byteStream = fileStreamToBytes.convertToBytes();
 //        List<byte[]> bytesBlocks = new ArrayList<byte[]>();
