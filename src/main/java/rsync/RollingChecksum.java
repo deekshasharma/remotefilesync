@@ -7,32 +7,63 @@ public class RollingChecksum extends Object{
     private byte[] block;
     private int startIndex;
     private int endIndex;
+    private int checkSumValue;
+
+
+    /**
+     *
+     * @param rollingChecksum
+     */
+    RollingChecksum(RollingChecksum rollingChecksum){
+        first16Bit = rollingChecksum.first16Bit;
+        second16Bit = rollingChecksum.second16Bit;
+    }
+
+    public  RollingChecksum(){
+    }
 
 
     /**
      * Compute 32 bit weak checksum.
-     * @param block array of bytes in a block
-     * @param startIndex start index of the block
-     * @param endIndex end index of the block
+     * @param block array of bytes in a block.
+     * @param startIndex start index of the block.
+     * @param endIndex end index of the block.
      */
     public void update(byte[] block,int startIndex, int endIndex){
-        clear();
         this.block = block;
-        for (int i = startIndex; i <= endIndex; i++) {
+        this.startIndex = startIndex;
+        this.endIndex = endIndex;
+        for (int i = startIndex; i <= endIndex; i++){
             first16Bit += block[i];
         }
-        for (int j = startIndex; j <= endIndex; j++) {
+        for (int j = startIndex; j <= endIndex; j++){
             second16Bit += ((endIndex - j + 1) * block[j]);
         }
     }
 
+    /**
+     * Compute 32 bit checksum given a byte[]
+     * @param bytes
+     */
+    public void update(byte[] bytes){
+        update(bytes,0,bytes.length-1);
+    }
+
+
+//    /**
+//     *
+//     * @return
+//     */
+//    public int getValue(){
+//        return ((first16Bit % Constants.MOD_M) + (Constants.MOD_M * (second16Bit % Constants.MOD_M)));
+//    }
 
     /**
      *
      * @return
      */
-    public int getValue(){
-        return ((first16Bit % Constants.MOD_M) + (Constants.MOD_M * (second16Bit % Constants.MOD_M)));
+    public void getValue(){
+        this.checkSumValue =  (first16Bit % Constants.MOD_M) + (Constants.MOD_M * (second16Bit % Constants.MOD_M));
     }
 
     /**
@@ -41,10 +72,16 @@ public class RollingChecksum extends Object{
      * @param nextByte the new last byte added to the block
      */
     public void rolling(byte nextByte){
-
-
+        prune();
+        first16Bit += nextByte;
+        first16Bit %= Constants.MOD_M;
+        second16Bit += first16Bit;
+        second16Bit %= Constants.MOD_M;
     }
 
+    /**
+     *
+     */
     private void clear(){
         first16Bit = 0;
         second16Bit= 0;
@@ -61,4 +98,21 @@ public class RollingChecksum extends Object{
         startIndex += 1;
         endIndex += 1;
     }
+
+    /**
+     * Calculate and return the WeakChecksum of each non-overlapping block of a file.
+     * This would be mostly used by the receiver.
+     * @param blocks List of byte[] containing all the blocks of a file.
+     * @return List of weakCheckSums for all the blocks of a file.
+     */
+//    List<Integer>  getWeakChecksums(List<byte[]> blocks){
+//        List<Integer> weakChecksums = new ArrayList<Integer>();
+//       for (byte[] block: blocks){
+//           update(block);
+//           weakChecksums.add(getValue());
+//           clear();
+//       }
+//        return weakChecksums;
+//    }
+
 }

@@ -72,7 +72,7 @@ public class Util {
      * Display the file data into characters & bytes
      * @param byteStream
      */
-    private static void displayByteStream(byte[] byteStream){
+     static void displayByteStream(byte[] byteStream){
         for (byte b: byteStream){
             System.out.println(b);
         }
@@ -87,13 +87,10 @@ public class Util {
      * Decode the file data into String
      * @param byteStream
      */
-    private static void displayByteToString(byte[] byteStream){
+     static void displayByteToString(byte[] byteStream){
         String s = new String(byteStream);
         System.out.println("Decrypted Text = "+s);
 
         System.out.println("Size in bytes: "+byteStream.length);
     }
-
-
-
 }

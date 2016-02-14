@@ -11,19 +11,17 @@ public class ChecksumPair extends Object {
     private byte[] strongChecksum;
     private int blockSequenceNumber;
     private long blockOffset;
-    private int lengthOfBlock;
 
     public ChecksumPair(int weakChecksum, byte[] strongChecksum) {
         this.weakChecksum = weakChecksum;
         this.strongChecksum = strongChecksum;
     }
 
-    public ChecksumPair(int weakChecksum, byte[] strongChecksum, int blockSequenceNumber, long blockOffset, int lengthOfBlock) {
+    public ChecksumPair(int weakChecksum, byte[] strongChecksum, int blockSequenceNumber, long blockOffset) {
         this.weakChecksum = weakChecksum;
         this.strongChecksum = strongChecksum;
         this.blockSequenceNumber = blockSequenceNumber;
         this.blockOffset = blockOffset;
-        this.lengthOfBlock = lengthOfBlock;
     }
 
 
@@ -42,7 +40,7 @@ public class ChecksumPair extends Object {
      * @return integer value of the weak checksum
      */
     public int getWeakChecksum() {
-        return weakChecksum;
+        return this.weakChecksum;
     }
 
     /**
@@ -50,7 +48,7 @@ public class ChecksumPair extends Object {
      * @return byte array of the hash value computed by MD5
      */
     public byte[] getStrongChecksum() {
-        return strongChecksum;
+        return this.strongChecksum;
     }
 
     /**
@@ -58,7 +56,7 @@ public class ChecksumPair extends Object {
      * @return
      */
     public int getBlockSequenceNumber() {
-        return blockSequenceNumber;
+        return this.blockSequenceNumber;
     }
 
     /**
@@ -66,16 +64,9 @@ public class ChecksumPair extends Object {
      * @return long value of the block offset
      */
     public long getBlockOffset() {
-        return blockOffset;
+        return this.blockOffset;
     }
 
-    /**
-     * Get the length of the data block,this checksumpair belong to
-     * @return integer value of the length
-     */
-    public int getLengthOfBlock() {
-        return lengthOfBlock;
-    }
 
     @Override
     public String toString() {
@@ -84,7 +75,6 @@ public class ChecksumPair extends Object {
                 ", strongChecksum=" + Arrays.toString(strongChecksum) +
                 ", blockSequenceNumber=" + blockSequenceNumber +
                 ", blockOffset=" + blockOffset +
-                ", lengthOfBlock=" + lengthOfBlock +
                 '}';
     }
 
