@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Util {
 
@@ -82,6 +81,25 @@ public class Util {
         System.out.println("Size in bytes: "+byteStream.length);
 
     }
+
+    /**
+     * Build the Index table for each checkSumPair of the receiver
+     * @param checksumPairs Pair containing weakChecksum and strongChecksum
+     * @return HashMap containing index of the first occurrence of the weak hash in
+     * the sorted Signatures from the receiver.
+     */
+    public Map<Integer,Integer> buildIndexTable(List<ChecksumPair> checksumPairs){
+        Map<Integer,Integer> indexTable = new HashMap<Integer, Integer>();
+        WeakChecksumComparator comparator = new WeakChecksumComparator();
+        Collections.sort(checksumPairs, comparator);
+        for (int i = 0; i < checksumPairs.size(); i++){
+            int weakSignature = checksumPairs.get(i).getWeakChecksum();
+            if (!indexTable.containsKey(weakSignature)){
+                indexTable.put(weakSignature,i);
+            }
+        }return indexTable;
+    }
+
 
     /**
      * Decode the file data into String

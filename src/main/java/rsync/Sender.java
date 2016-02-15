@@ -1,7 +1,5 @@
 package rsync;
 
-import jdk.nashorn.internal.ir.Block;
-
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -15,6 +13,11 @@ public class Sender {
     List<Byte> matched = new ArrayList<Byte>();
 
     public void sendDelta(){
+
+    }
+
+
+    public void sendData(){
 
     }
 
@@ -84,17 +87,17 @@ public class Sender {
     }
 
 
-    /**
-     *
-     * @param k
-     * @param l
-     * @param block
-     * @return
-     */
-    int getWeakHash(int k, int l, byte[] block){
-        rollingChecksum.update(block, k, l);
-        return rollingChecksum.getValue();
-    }
+//    /**
+//     *
+//     * @param k
+//     * @param l
+//     * @param block
+//     * @return
+//     */
+//    int getWeakHash(int k, int l, byte[] block){
+//        rollingChecksum.update(block, k, l);
+//        return rollingChecksum.getValue();
+//    }
 
     /**
      *
@@ -105,17 +108,4 @@ public class Sender {
         MD5 md5 = new MD5();
         return md5.getMd5Checksum(block);
     }
-
-
-    /**
-     *
-     * @param byteStream
-     */
-    private static void displayByteToString(byte[] byteStream){
-        String s = new String(byteStream);
-        System.out.println("Decrypted Text = "+s);
-        System.out.println("Size in bytes: "+byteStream.length);
-    }
-
-
 }

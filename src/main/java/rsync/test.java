@@ -11,11 +11,11 @@ public class test {
     private static final int MAXSIZE = 5;
 
     public static void main(String[] args) {
-        Signatures checksumSignature = new Signatures();
-        byte[] block = new byte[]{127,127,127,109,32,104,97,112,112,121,32,104};
-        String binaryHash = Integer.toBinaryString(checksumSignature.getRollingChecksum(0, 3, block));
-        System.out.println(binaryHash);
-        System.out.println(binaryHash.length());
+//        Signatures checksumSignature = new Signatures();
+//        byte[] block = new byte[]{127,127,127,109,32,104,97,112,112,121,32,104};
+//        String binaryHash = Integer.toBinaryString(checksumSignature.getRollingChecksum(0, 3, block));
+//        System.out.println(binaryHash);
+//        System.out.println(binaryHash.length());
     }
 
 //    public static void main(String[] args) {

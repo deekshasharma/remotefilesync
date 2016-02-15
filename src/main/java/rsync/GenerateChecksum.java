@@ -1,8 +1,6 @@
 package rsync;
 
 
-import com.sun.tools.internal.jxc.ap.Const;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +27,7 @@ public class GenerateChecksum extends Object{
 //    }
 
     /**
-     * Get the rolling checksum for whole byteStream
+     * Get the roll checksum for whole byteStream
      * @param byteStream the file converted into an array of bytes.
      * @return List of RollingChecksum for each overlapping block.
      */
@@ -44,13 +42,17 @@ public class GenerateChecksum extends Object{
         rollingChecksum.getValue();
         checksumArrayList.add(rollingChecksum);
 
+        RollingChecksum previous = rollingChecksum;
         for(int i = 1; i < byteStream.length; i++){
             byte[] rollingBlock = Arrays.copyOfRange(byteStream, i, i+Constants.MIN_BLOCK_SIZE-1);
             if(rollingBlock.length == 0){
                 break;
             }else{
-                RollingChecksum checksum = new RollingChecksum(rollingChecksum);
-                checksum.rolling(byteStream[i]);
+                RollingChecksum checksum = new RollingChecksum(previous);
+                checksum.roll(byteStream[i]);
+                checksum.getValue();
+                checksumArrayList.add(checksum);
+                previous = checksum;
             }
         }
         return new ArrayList<RollingChecksum>();

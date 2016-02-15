@@ -71,7 +71,7 @@ public class RollingChecksum extends Object{
      * <em>X<sub>k+1</sub></em>....<em>X<sub>l+1</sub></em>
      * @param nextByte the new last byte added to the block
      */
-    public void rolling(byte nextByte){
+    public void roll(byte nextByte){
         prune();
         first16Bit += nextByte;
         first16Bit %= Constants.MOD_M;
@@ -105,14 +105,14 @@ public class RollingChecksum extends Object{
      * @param blocks List of byte[] containing all the blocks of a file.
      * @return List of weakCheckSums for all the blocks of a file.
      */
-//    List<Integer>  getWeakChecksums(List<byte[]> blocks){
-//        List<Integer> weakChecksums = new ArrayList<Integer>();
-//       for (byte[] block: blocks){
-//           update(block);
-//           weakChecksums.add(getValue());
-//           clear();
-//       }
-//        return weakChecksums;
-//    }
+    List<Integer>  getWeakChecksums(List<byte[]> blocks){
+        List<Integer> weakChecksums = new ArrayList<Integer>();
+       for (byte[] block: blocks){
+           update(block);
+           weakChecksums.add(getValue());
+           clear();
+       }
+        return weakChecksums;
+    }
 
 }
