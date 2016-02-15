@@ -12,19 +12,19 @@ public class GenerateChecksum extends Object{
      * @param byteStream the file converted into an array of bytes.
      * @return List of checkSumPair for all blocks.
      */
-//    List<ChecksumPair> getCheckSumPairs(byte[] byteStream){
-//        List<byte[]> blocks = Util.splitIntoBlocks(byteStream);
-//        MD5 md5 = new MD5();
-//        RollingChecksum rollingChecksum = new RollingChecksum();
-//
-//        List<byte[]> md5CheckSums = md5.getMd5Checksums(blocks);
-//        List<Integer> weakCheckSums = rollingChecksum.getWeakChecksums(blocks);
-//        List<ChecksumPair> checksumPairs = new ArrayList<ChecksumPair>();
-//        for (int i = 0; i < weakCheckSums.size(); i++){
-//            checksumPairs.add(new ChecksumPair(weakCheckSums.get(i),md5CheckSums.get(i)));
-//        }
-//        return checksumPairs;
-//    }
+    List<ChecksumPair> getCheckSumPairs(byte[] byteStream){
+        List<byte[]> blocks = Util.splitIntoBlocks(byteStream);
+        MD5 md5 = new MD5();
+        RollingChecksum rollingChecksum = new RollingChecksum();
+
+        List<byte[]> md5CheckSums = md5.getMd5Checksums(blocks);
+        List<Integer> weakCheckSums = rollingChecksum.getWeakChecksums(blocks);
+        List<ChecksumPair> checksumPairs = new ArrayList<ChecksumPair>();
+        for (int i = 0; i < weakCheckSums.size(); i++){
+            checksumPairs.add(new ChecksumPair(weakCheckSums.get(i),md5CheckSums.get(i)));
+        }
+        return checksumPairs;
+    }
 
     /**
      * Get the roll checksum for whole byteStream
