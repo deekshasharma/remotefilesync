@@ -21,7 +21,7 @@ public class GenerateChecksum extends Object{
         List<Integer> weakCheckSums = rollingChecksum.getWeakChecksums(blocks);
         List<ChecksumPair> checksumPairs = new ArrayList<ChecksumPair>();
         for (int i = 0; i < weakCheckSums.size(); i++){
-            checksumPairs.add(new ChecksumPair(weakCheckSums.get(i),md5CheckSums.get(i)));
+            checksumPairs.add(new ChecksumPair(weakCheckSums.get(i),md5CheckSums.get(i),i+1));
         }
         return checksumPairs;
     }

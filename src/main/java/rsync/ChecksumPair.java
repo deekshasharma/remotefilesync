@@ -17,11 +17,11 @@ public class ChecksumPair extends Object {
         this.strongChecksum = strongChecksum;
     }
 
-    public ChecksumPair(int weakChecksum, byte[] strongChecksum, int blockSequenceNumber, long blockOffset) {
+    public ChecksumPair(int weakChecksum, byte[] strongChecksum, int blockSequenceNumber) {
         this.weakChecksum = weakChecksum;
         this.strongChecksum = strongChecksum;
         this.blockSequenceNumber = blockSequenceNumber;
-        this.blockOffset = blockOffset;
+//        this.blockOffset = blockOffset;
     }
 
 

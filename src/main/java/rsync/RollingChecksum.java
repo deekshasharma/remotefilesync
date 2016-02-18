@@ -1,5 +1,8 @@
 package rsync;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RollingChecksum extends Object{
 
     private int first16Bit = 0;
@@ -105,11 +108,11 @@ public class RollingChecksum extends Object{
      * @param blocks List of byte[] containing all the blocks of a file.
      * @return List of weakCheckSums for all the blocks of a file.
      */
-    List<Integer>  getWeakChecksums(List<byte[]> blocks){
+    List<Integer> getWeakChecksums(List<byte[]> blocks){
         List<Integer> weakChecksums = new ArrayList<Integer>();
        for (byte[] block: blocks){
            update(block);
-           weakChecksums.add(getValue());
+           weakChecksums.add(checkSumValue);
            clear();
        }
         return weakChecksums;
