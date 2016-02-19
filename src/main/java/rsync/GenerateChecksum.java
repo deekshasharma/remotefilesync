@@ -66,9 +66,9 @@ public class GenerateChecksum {
      * @return
      */
     byte[] getStrongChecksum(byte[] bytes, int byteOffset) {
-
         return new byte[20];
     }
+
 
 
 }
