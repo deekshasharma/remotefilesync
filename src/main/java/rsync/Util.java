@@ -81,7 +81,6 @@ public class Util {
             System.out.println((char) byteStream[i]);
         }
         System.out.println("Size in bytes: " + byteStream.length);
-
     }
 
     /**
@@ -93,21 +92,31 @@ public class Util {
      */
     public Map<Integer, Integer> buildIndexTable(List<ChecksumPair> checksumPairs) {
         Map<Integer, Integer> indexTable = new HashMap<Integer, Integer>();
-        WeakChecksumComparator comparator = new WeakChecksumComparator();
-        Collections.sort(checksumPairs, comparator);
-        for (int i = 0; i < checksumPairs.size(); i++) {
+//        WeakChecksumComparator comparator = new WeakChecksumComparator();
+//        Collections.sort(checksumPairs, comparator);
+        for (int i = 0; i < checksumPairs.size(); i++){
             int weakSignature = checksumPairs.get(i).getWeakChecksum();
-            if (!indexTable.containsKey(weakSignature)) {
+            if(!indexTable.containsKey(weakSignature)){
                 indexTable.put(weakSignature, i);
             }
         }
         return indexTable;
     }
 
+    /**
+     * Sort the checkSumPairs according to weak checksum
+     * @param checksumPairs List of unsorted checkSumPairs
+     * @return list of sorted checkSumPairs
+     */
+    public List<ChecksumPair> sortSignaturesFromReceiver(List<ChecksumPair> checksumPairs){
+        WeakChecksumComparator comparator = new WeakChecksumComparator();
+        Collections.sort(checksumPairs, comparator);
+        return checksumPairs;
+    }
+
 
     /**
      * Decode the file data into String
-     *
      * @param byteStream
      */
     static void displayByteToString(byte[] byteStream) {

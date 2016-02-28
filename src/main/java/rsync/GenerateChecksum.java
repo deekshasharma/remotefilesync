@@ -9,16 +9,15 @@ public class GenerateChecksum {
 
     /**
      * Get the check sum pairs of all the non-overlapping blocks.This would be mostly called by the receiver.
-     *
      * @param byteStream the file converted into an array of bytes.
      * @return List of checkSumPair for all blocks.
      */
     List<ChecksumPair> getCheckSumPairs(byte[] byteStream) {
         List<byte[]> blocks = Util.splitIntoBlocks(byteStream);
         MD5 md5 = new MD5();
-        RollingChecksum rollingChecksum = new RollingChecksum();
-
         List<byte[]> md5CheckSums = md5.getMd5Checksums(blocks);
+
+        RollingChecksum rollingChecksum = new RollingChecksum();
         List<Integer> weakCheckSums = rollingChecksum.getWeakChecksums(blocks);
         List<ChecksumPair> checksumPairs = new ArrayList<ChecksumPair>();
         for (int i = 0; i < weakCheckSums.size(); i++) {
@@ -29,7 +28,6 @@ public class GenerateChecksum {
 
     /**
      * Get the roll checksum for whole byteStream
-     *
      * @param byteStream the file converted into an array of bytes.
      * @return List of RollingChecksum for each overlapping block.
      */
