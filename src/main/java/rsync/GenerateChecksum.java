@@ -44,7 +44,7 @@ public class GenerateChecksum {
 
         RollingChecksum previous = rollingChecksum;
         for (int i = 1; i < byteStream.length; i++) {
-            byte[] rollingBlock = Arrays.copyOfRange(byteStream, i, i + Constants.MIN_BLOCK_SIZE - 1);
+            byte[] rollingBlock = Arrays.copyOfRange(byteStream, i, i + endIndex - 1);
             if (rollingBlock.length == 0) {
                 break;
             } else {

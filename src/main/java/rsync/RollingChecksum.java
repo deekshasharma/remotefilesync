@@ -117,4 +117,11 @@ public class RollingChecksum extends Object {
         return weakChecksums;
     }
 
+    public byte[] getBlock() {
+        return block;
+    }
+
+    public int getCheckSumValue() {
+        return checkSumValue;
+    }
 }
