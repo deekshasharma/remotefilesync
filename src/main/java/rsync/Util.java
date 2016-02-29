@@ -51,7 +51,7 @@ public class Util {
      *
      * @throws FileNotFoundException
      */
-    static byte[] convertToBytes(String filepath) throws FileNotFoundException {
+    public static byte[] convertToBytes(String filepath) throws FileNotFoundException {
 
         File dataToTransmit = new File(filepath);
         FileInputStream fileInputStream = new FileInputStream(dataToTransmit);

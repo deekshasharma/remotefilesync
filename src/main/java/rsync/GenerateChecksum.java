@@ -12,7 +12,7 @@ public class GenerateChecksum {
      * @param byteStream the file converted into an array of bytes.
      * @return List of checkSumPair for all blocks.
      */
-    List<ChecksumPair> getCheckSumPairs(byte[] byteStream) {
+    public List<ChecksumPair> getCheckSumPairs(byte[] byteStream) {
         List<byte[]> blocks = Util.splitIntoBlocks(byteStream);
         MD5 md5 = new MD5();
         List<byte[]> md5CheckSums = md5.getMd5Checksums(blocks);

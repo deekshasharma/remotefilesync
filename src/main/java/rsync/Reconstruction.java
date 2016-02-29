@@ -10,13 +10,6 @@ import java.util.List;
 
 public class Reconstruction {
 
-    /**
-     * Input:
-     *      List<byte[]> receiverBlocks
-     *
-     *
-     */
-
     private static final String path = "/Users/deeksha/IdeaProjects/remotefilesynchronization";
 
     /**
