@@ -12,7 +12,7 @@ public class MD5 {
      * @param block an array containing few hundred bytes
      * @return an array of bytes for the resulting hash value
      */
-    byte[] getMd5Checksum(byte[] block) {
+    static byte[] getMd5Checksum(byte[] block) {
         byte[] hashSignature;
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

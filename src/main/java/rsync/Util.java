@@ -85,9 +85,8 @@ public class Util {
 
     /**
      * Build the Index table for each checkSumPair of the receiver
-     *
      * @param checksumPairs Pair containing weakChecksum and strongChecksum
-     * @return HashMap containing index of the first occurrence of the weak hash in
+     * @return HashMap containing the key as weak hash and value as first occurrence of the weak hash in
      * the sorted Signatures from the receiver.
      */
     public Map<Integer, Integer> buildIndexTable(List<ChecksumPair> checksumPairs) {

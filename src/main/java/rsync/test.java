@@ -1,16 +1,25 @@
 package rsync;
 
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.FileNotFoundException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class test {
 
     private static final int MAXSIZE = 5;
 
     public static void main(String[] args) {
+        String s1 = "B1";
+        String s2 = "110";
+        System.out.println(StringUtils.isNumeric(s1));
+
+
 //        Signatures checksumSignature = new Signatures();
 //        byte[] block = new byte[]{127,127,127,109,32,104,97,112,112,121,32,104};
 //        String binaryHash = Integer.toBinaryString(checksumSignature.getRollingChecksum(0, 3, block));
