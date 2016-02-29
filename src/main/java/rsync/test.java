@@ -15,9 +15,14 @@ public class test {
     private static final int MAXSIZE = 5;
 
     public static void main(String[] args) {
-        String s1 = "B1";
-        String s2 = "110";
-        System.out.println(StringUtils.isNumeric(s1));
+//        String s1 = "B1";
+//        String s2 = "110";
+//        System.out.println(StringUtils.isNumeric(s1));
+//        byte b1 = (byte) 100;
+//        System.out.println((char) b1);
+        String s = "100";
+        System.out.println(Byte.valueOf(s));
+
 
 
 //        Signatures checksumSignature = new Signatures();
