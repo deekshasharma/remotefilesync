@@ -38,4 +38,34 @@ public class RollingChecksumTest {
         assertEquals(expectedSecond16,actualSecond16);
 
     }
+
+    @Test
+    public void testGetValue(){
+        byte[] block = new byte[]{105,32,97,109,88};
+        RollingChecksum checksum = new RollingChecksum();
+        checksum.update(block);
+        checksum.getValue();
+
+        int actualValue = checksum.getCheckSumValue();
+        int expectedValue = (431 % Constants.MOD_M)+ Constants.MOD_M*(1250 % Constants.MOD_M);
+        assertEquals(expectedValue,actualValue);
+    }
+
+    @Test
+    public void testPrune(){
+        byte[] block = new byte[]{105,32,97,109,88};
+        RollingChecksum checksum = new RollingChecksum();
+        checksum.update(block);
+        checksum.prune();
+
+        int expectedFirst16 = 431 - 105;
+        int actualFirst16 = checksum.getFirst16Bit();
+
+        int expectedSecond16 = 1250 - (5*105);
+        int actualSecond16 = checksum.getSecond16Bit();
+
+        assertEquals(expectedFirst16,actualFirst16);
+        assertEquals(expectedSecond16,actualSecond16);
+
+    }
 }

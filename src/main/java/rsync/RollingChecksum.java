@@ -96,8 +96,8 @@ public class RollingChecksum extends Object {
     public void prune() {
         first16Bit -= block[startIndex];
         second16Bit -= (endIndex - startIndex + 1) * block[startIndex];
-        startIndex += 1;
-        endIndex += 1;
+//        startIndex += 1;
+//        endIndex += 1;
     }
 
     /**
@@ -117,25 +117,15 @@ public class RollingChecksum extends Object {
         return weakChecksums;
     }
 
-    public int getFirst16Bit() {
-        return first16Bit;
-    }
+    public int getFirst16Bit() {return first16Bit;}
 
-    public int getSecond16Bit() {
-        return second16Bit;
-    }
+    public int getSecond16Bit() {return second16Bit;}
 
-    public int getStartIndex() {
-        return startIndex;
-    }
+    public int getStartIndex() {return startIndex;}
 
-    public int getEndIndex() {
-        return endIndex;
-    }
+    public int getEndIndex() {return endIndex;}
 
-    public byte[] getBlock() {
-        return block;
-    }
+    public byte[] getBlock() {return block;}
 
     public int getCheckSumValue() {
         return checkSumValue;
