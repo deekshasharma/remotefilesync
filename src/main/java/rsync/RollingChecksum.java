@@ -117,6 +117,22 @@ public class RollingChecksum extends Object {
         return weakChecksums;
     }
 
+    public int getFirst16Bit() {
+        return first16Bit;
+    }
+
+    public int getSecond16Bit() {
+        return second16Bit;
+    }
+
+    public int getStartIndex() {
+        return startIndex;
+    }
+
+    public int getEndIndex() {
+        return endIndex;
+    }
+
     public byte[] getBlock() {
         return block;
     }
