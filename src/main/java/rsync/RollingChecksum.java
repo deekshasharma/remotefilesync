@@ -38,9 +38,11 @@ public class RollingChecksum extends Object {
         for (int i = startIndex; i <= endIndex; i++) {
             first16Bit += block[i];
         }
+        first16Bit %= Constants.MOD_M;
         for (int j = startIndex; j <= endIndex; j++) {
             second16Bit += ((endIndex - j + 1) * block[j]);
         }
+        second16Bit %= Constants.MOD_M;
     }
 
     /**
@@ -64,7 +66,7 @@ public class RollingChecksum extends Object {
      * @return
      */
     public void getValue() {
-        this.checkSumValue = (first16Bit % Constants.MOD_M) + (Constants.MOD_M * (second16Bit % Constants.MOD_M));
+        this.checkSumValue = first16Bit + (Constants.MOD_M * second16Bit);
     }
 
     /**
