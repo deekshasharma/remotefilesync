@@ -2,7 +2,9 @@ package rsync;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -86,6 +88,21 @@ public class RollingChecksumTest {
 
         assertEquals(expectedFirst16,actualFirst16);
         assertEquals(expectedSecond16,actualSecond16);
+    }
 
+
+    @Test
+    public void testGetWeakChecksums(){
+        byte[] block1 = new byte[]{105,32,97,109,88};
+        RollingChecksum checksum = new RollingChecksum();
+        checksum.update(block1);
+        checksum.getValue();
+        List<Integer> actualChecksums = new ArrayList<Integer>();
+        actualChecksums.add(checksum.getCheckSumValue());
+
+        List<Integer> expectedChecksums = new ArrayList<Integer>();
+        int expectedSumValue = (431 % Constants.MOD_M) + (Constants.MOD_M* (1250 % Constants.MOD_M));
+        expectedChecksums.add(expectedSumValue);
+        assertTrue(actualChecksums.equals(expectedChecksums));
     }
 }
