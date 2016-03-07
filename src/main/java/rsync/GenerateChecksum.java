@@ -32,7 +32,7 @@ public class GenerateChecksum {
      * @return List of RollingChecksum for each overlapping block.
      */
     List<RollingChecksum> getRollingChecksum(byte[] byteStream) {
-        List<RollingChecksum> checksumArrayList = new ArrayList<RollingChecksum>();
+        List<RollingChecksum> rollingChecksums = new ArrayList<RollingChecksum>();
         int startIndex = 0;
         int endIndex = Constants.MIN_BLOCK_SIZE;
 
@@ -40,22 +40,28 @@ public class GenerateChecksum {
         RollingChecksum rollingChecksum = new RollingChecksum();
         rollingChecksum.update(block);
         rollingChecksum.getValue();
-        checksumArrayList.add(rollingChecksum);
+        rollingChecksums.add(rollingChecksum);
 
         RollingChecksum previous = rollingChecksum;
-        for (int i = 1; i < byteStream.length; i++) {
-            byte[] rollingBlock = Arrays.copyOfRange(byteStream, i, i + endIndex - 1);
+        int remainingBytes = byteStream.length-1 - 1;
+        for (int i = 1; i < byteStream.length; i++){
+            byte[] rollingBlock;
+            if (remainingBytes >= endIndex){
+                rollingBlock = Arrays.copyOfRange(byteStream,i,i + endIndex - 1);
+            }else{
+                rollingBlock = Arrays.copyOfRange(byteStream,i,byteStream.length);
+            }
             if (rollingBlock.length == 0) {
                 break;
             } else {
                 RollingChecksum checksum = new RollingChecksum(previous);
                 checksum.roll(byteStream[i]);
                 checksum.getValue();
-                checksumArrayList.add(checksum);
+                rollingChecksums.add(checksum);
                 previous = checksum;
             }
         }
-        return checksumArrayList;
+        return rollingChecksums;
     }
 
     /**

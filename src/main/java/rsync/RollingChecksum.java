@@ -90,6 +90,7 @@ public class RollingChecksum extends Object {
         second16Bit = 0;
         startIndex = 0;
         endIndex = 0;
+        checkSumValue = 0;
     }
 
     /**

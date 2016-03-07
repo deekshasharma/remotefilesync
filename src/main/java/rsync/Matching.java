@@ -8,10 +8,10 @@ public class Matching {
 
 
     /**
-     * Calculate the stream of literal bytes along with tokens representing the block matches.
+     * Calculate the stream of unmatched byte literals along with tokens representing the block matches.
      * @param rollingChecksums List of rolling checksums for overlapping blocks of the sender's file.
-     * @param sortedChecksumPairs Sorted list of ChecksumPairs from the receiver sorted by their weakhash.
-     * @param indexTable Map containing weak checksum to index of its first occurrence in the list of sortedChecksumPairs.
+     * @param sortedChecksumPairs Sorted list of ChecksumPairs from the receiver sorted by their weak hash.
+     * @param indexTable HashMap containing weak checksum to index of its first occurrence in the list of sortedChecksumPairs.
      * @return String containing the sequence of delta
      */
     public String calculateDelta(List<RollingChecksum> rollingChecksums,List<ChecksumPair> sortedChecksumPairs,Map<Integer,Integer> indexTable){
