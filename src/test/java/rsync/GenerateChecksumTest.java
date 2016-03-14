@@ -43,6 +43,10 @@ public class GenerateChecksumTest {
         expectedChecksums.add(checksum2);
         expectedChecksums.add(checksum3);
         expectedChecksums.add(checksum4);
+        expectedChecksums.add(new RollingChecksum());
+        expectedChecksums.add(new RollingChecksum());
+        expectedChecksums.add(new RollingChecksum());
+        expectedChecksums.add(new RollingChecksum());
 
         GenerateChecksum generateChecksum = new GenerateChecksum();
         List<RollingChecksum> actualChecksums = generateChecksum.getRollingChecksum(byteStream);
@@ -50,7 +54,6 @@ public class GenerateChecksumTest {
         RollingChecksum c2 = actualChecksums.get(1);
         RollingChecksum c3 = actualChecksums.get(2);
         RollingChecksum c4 = actualChecksums.get(3);
-
 
         assertTrue(expectedChecksums.size() == actualChecksums.size());
         assertTrue(checksum1.toString().equals(c1.toString()));
@@ -60,4 +63,22 @@ public class GenerateChecksumTest {
     }
 
 
+    @Test
+    public void testGetCheckSumPairs(){
+        byte[] byteStream = new byte[]{105, 32, 97, 109, 127, 12, 87, 28};
+        List<byte[]> strongHash = getStrongHashes(byteStream);
+
+
+
+    }
+
+    private static List<byte[]> getStrongHashes(byte[] byteStream){
+        List<byte[]> blocks = new ArrayList<byte[]>();
+        byte[] b1 = new byte[]{105,32,97,109,127};
+        byte[] b2 = new byte[]{12,87,28};
+        blocks.add(b1);
+        blocks.add(b2);
+        MD5 md5 = new MD5();
+        return md5.getMd5Checksums(blocks);
+    }
 }
