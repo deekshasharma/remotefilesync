@@ -66,13 +66,23 @@ public class GenerateChecksumTest {
     @Test
     public void testGetCheckSumPairs(){
         byte[] byteStream = new byte[]{105, 32, 97, 109, 127, 12, 87, 28};
-        List<byte[]> strongHash = getStrongHashes(byteStream);
+        List<byte[]> strongHash = getStrongHashes();
+        int weakHash1 = (470 % Constants.MOD_M) + (Constants.MOD_M*(1289 % Constants.MOD_M));
+        int weakHash2 = (127 % Constants.MOD_M) + (Constants.MOD_M*(238 % Constants.MOD_M));
 
+        List<ChecksumPair> expectedChecksumPairs = new ArrayList<ChecksumPair>();
+        expectedChecksumPairs.add(new ChecksumPair(weakHash1,strongHash.get(0),1));
+        expectedChecksumPairs.add(new ChecksumPair(weakHash2,strongHash.get(1),2));
 
+        GenerateChecksum generateChecksum = new GenerateChecksum();
+        List<ChecksumPair> actualChecksumPairs = generateChecksum.getCheckSumPairs(byteStream);
 
+        assertTrue(expectedChecksumPairs.size() == actualChecksumPairs.size());
+        assertTrue(expectedChecksumPairs.get(0).toString().equals(actualChecksumPairs.get(0).toString()));
+        assertTrue(expectedChecksumPairs.get(1).toString().equals(actualChecksumPairs.get(1).toString()));
     }
 
-    private static List<byte[]> getStrongHashes(byte[] byteStream){
+    private static List<byte[]> getStrongHashes(){
         List<byte[]> blocks = new ArrayList<byte[]>();
         byte[] b1 = new byte[]{105,32,97,109,127};
         byte[] b2 = new byte[]{12,87,28};
@@ -81,4 +91,5 @@ public class GenerateChecksumTest {
         MD5 md5 = new MD5();
         return md5.getMd5Checksums(blocks);
     }
+
 }
