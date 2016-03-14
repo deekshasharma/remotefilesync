@@ -1,36 +1,61 @@
 package rsync;
 
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class Matching {
 
-
     /**
-     * Calculate the stream of unmatched byte literals along with tokens representing the block matches.
      *
-     * @param rollingChecksums    List of rolling checksums for overlapping blocks of the sender's file.
-     * @param sortedChecksumPairs Sorted list of ChecksumPairs from the receiver sorted by their weak hash.
-     * @param indexTable          HashMap containing weak checksum to index of its first occurrence in the list of sortedChecksumPairs.
-     * @return String containing the sequence of delta
+     * @param byteStream
+     * @param sortedChecksumPairs
+     * @param indexTable
+     * @return
      */
-    public String calculateDelta(List<RollingChecksum> rollingChecksums, List<ChecksumPair> sortedChecksumPairs, Map<Integer, Integer> indexTable) {
+    public String calculateDelta(byte[] byteStream, List<ChecksumPair> sortedChecksumPairs,
+                                 Map<Integer, Integer> indexTable) {
         StringBuilder result = new StringBuilder();
-        for (RollingChecksum rollingChecksum : rollingChecksums) {
-            if (indexTable.containsKey(rollingChecksum.getCheckSumValue())) {
-                int index = indexTable.get(rollingChecksum.getCheckSumValue());
-                byte[] strongHash = MD5.getMd5Checksum(rollingChecksum.getBlock());
-                String token = checkStrongHash(sortedChecksumPairs, rollingChecksum.getCheckSumValue(), index, strongHash);
-                if (token != null) {
-                    result.append(token).append(",");
-                }
+        int start = 0;
+        int end = Constants.MIN_BLOCK_SIZE_TEST;
+        byte[] block = Arrays.copyOfRange(byteStream,start,end);
+        GenerateChecksum generateChecksum = new GenerateChecksum();
+        RollingChecksum checksum = generateChecksum.getFirstWeakChecksum(block);
+        while (start <= byteStream.length-1){
+            String token = computeToken(checksum,sortedChecksumPairs,indexTable);
+            if (token != null){
+                result.append(token).append(",");
+                start += end;
+                end = start + Constants.MIN_BLOCK_SIZE_TEST;
+                block = Arrays.copyOfRange(byteStream,start,end);
+                checksum = generateChecksum.getFirstWeakChecksum(block);
+            }else{
+                result.append(checksum.getBlock()[0]).append(",");
+                start += 1;
+                end = start + Constants.MIN_BLOCK_SIZE_TEST;
+                block = Arrays.copyOfRange(byteStream,start,end);
+                RollingChecksum previous = checksum;
+                checksum = generateChecksum.getRollingChecksum1(previous,block);
             }
-            result.append(rollingChecksum.getBlock()[0]).append(",");
         }
         return result.toString();
     }
 
+    /**
+     *
+     * @param checksum
+     * @param sortedChecksumPairs
+     * @param indexTable
+     * @return
+     */
+    public String computeToken(RollingChecksum checksum,List<ChecksumPair> sortedChecksumPairs,Map<Integer, Integer> indexTable){
+        if (indexTable.containsKey(checksum.getCheckSumValue())) {
+                int index = indexTable.get(checksum.getCheckSumValue());
+                byte[] strongHash = MD5.getMd5Checksum(checksum.getBlock());
+                return checkStrongHash(sortedChecksumPairs, checksum.getCheckSumValue(), index, strongHash);
+    } else return null;
+    }
     /**
      * Check for the second level match of the strongChecksum
      *
@@ -42,7 +67,7 @@ public class Matching {
      * if match is found or null if no match found
      */
     private String checkStrongHash(List<ChecksumPair> sortedChecksumPairs, int rollingChecksum, int index, byte[] strongHash) {
-        while (sortedChecksumPairs.get(index).getWeakChecksum() != rollingChecksum) {
+        while (sortedChecksumPairs.get(index).getWeakChecksum() == rollingChecksum) {
             if (Arrays.equals(sortedChecksumPairs.get(index).getStrongChecksum(), strongHash)) {
                 return "B" + sortedChecksumPairs.get(index).getBlockSequenceNumber();
             } else index += 1;

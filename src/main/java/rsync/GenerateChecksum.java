@@ -29,7 +29,7 @@ public class GenerateChecksum {
 
 
     /**
-     * Get the roll checksum for whole byteStream
+     * Get the roll checksum for whole byteStream.
      * @param byteStream the file converted into an array of bytes.
      * @return List of RollingChecksum for each overlapping block.
      */
@@ -56,42 +56,30 @@ public class GenerateChecksum {
     }
 
     /**
-     * Get the roll checksum for whole byteStream
-     * @param byteStream the file converted into an array of bytes.
-     * @return List of RollingChecksum for each overlapping block.
+     * Calculate the rolling checksum of non overlapping block
+     * @param block Array of bytes
+     * @return RollingChecksum without rolling
      */
-//    List<RollingChecksum> getRollingChecksum(byte[] byteStream) {
-//        List<RollingChecksum> rollingChecksums = new ArrayList<RollingChecksum>();
-//        int startIndex = 0;
-//        int endIndex = Constants.MIN_BLOCK_SIZE_TEST;
-//
-//        byte[] block = Arrays.copyOfRange(byteStream, startIndex, endIndex);
-//        RollingChecksum rollingChecksum = new RollingChecksum();
-//        rollingChecksum.update(block);
-//        rollingChecksum.calculateValue();
-//        rollingChecksums.add(rollingChecksum);
-//
-//        RollingChecksum previous = rollingChecksum;
-//        int remainingBytes = byteStream.length-1 - 1;
-//        for (int i = 1; i < byteStream.length; i++){
-//            byte[] rollingBlock;
-//            if (remainingBytes >= endIndex){
-//                rollingBlock = Arrays.copyOfRange(byteStream,i,i + endIndex - 1);
-//            }else{
-//                rollingBlock = Arrays.copyOfRange(byteStream,i,byteStream.length);
-//            }
-//            if (rollingBlock.length == 0) {
-//                break;
-//            } else {
-//                RollingChecksum checksum = new RollingChecksum(previous);
-//                checksum.roll(byteStream[i]);
-//                checksum.calculateValue();
-//                rollingChecksums.add(checksum);
-//                previous = checksum;
-//            }
-//        }
-//        return rollingChecksums;
-//    }
+    RollingChecksum getFirstWeakChecksum(byte[] block){
+        RollingChecksum checksum = new RollingChecksum();
+        checksum.update(block);
+        checksum.calculateValue();
+        return checksum;
+    }
+
+    /**
+     * Calculate the rolling checksum of an overlapping block
+     * @param previous RollingChecksum for the previous block
+     * @param newBlock Byte Array of an overlapping block
+     * @return RollingChecksum with rolling
+     */
+    RollingChecksum getRollingChecksum1(RollingChecksum previous,byte[] newBlock){
+
+        RollingChecksum rolling = new RollingChecksum(previous);
+        rolling.roll(newBlock, previous.getBlock()[0]);
+        rolling.calculateValue();
+        return rolling;
+    }
 
 
 }
