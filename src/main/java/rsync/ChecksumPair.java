@@ -74,8 +74,6 @@ public class ChecksumPair extends Object {
                 "weakChecksum=" + weakChecksum +
                 ", strongChecksum=" + Arrays.toString(strongChecksum) +
                 ", blockSequenceNumber=" + blockSequenceNumber +
-                ", blockOffset=" + blockOffset +
                 '}';
     }
-
 }
