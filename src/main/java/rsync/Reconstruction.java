@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Reconstruction {
 
-    private static final String path = "/Users/deeksha/IdeaProjects/remotefilesynchronization";
+    private static final String path = "/Users/deeksha/IdeaProjects/remotefilesynchronization/src/main/resources/a.txt";
 
     /**
      * Reconstruct the file using the byte literals and matching tokens received from sender
@@ -33,7 +33,7 @@ public class Reconstruction {
                     bufferedWriter.write(Character.toString(charLiteral));
                 }else{
                     int blockSequenceNumber = Integer.parseInt(literal.substring(1));
-                    bufferedWriter.write(new String(receiverBlocks.get(blockSequenceNumber)));
+                    bufferedWriter.write(new String(receiverBlocks.get(blockSequenceNumber-1)));
                 }
             }bufferedWriter.close();
 

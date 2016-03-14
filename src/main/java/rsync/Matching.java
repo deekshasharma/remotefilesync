@@ -26,7 +26,7 @@ public class Matching {
             String token = computeToken(checksum,sortedChecksumPairs,indexTable);
             if (token != null){
                 result.append(token).append(",");
-                start += end;
+                start += Constants.MIN_BLOCK_SIZE_TEST;
                 end = start + Constants.MIN_BLOCK_SIZE_TEST;
                 block = Arrays.copyOfRange(byteStream,start,end);
                 checksum = generateChecksum.getFirstWeakChecksum(block);
@@ -39,7 +39,7 @@ public class Matching {
                 checksum = generateChecksum.getRollingChecksum1(previous,block);
             }
         }
-        return result.toString();
+        return result.substring(0,result.length()-1);
     }
 
     /**
