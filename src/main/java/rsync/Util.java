@@ -89,7 +89,7 @@ public class Util {
      * @return HashMap containing the key as weak hash and value as first occurrence of the weak hash in
      * the sorted Signatures from the receiver.
      */
-    public Map<Integer, Integer> buildIndexTable(List<ChecksumPair> checksumPairs) {
+    public static Map<Integer, Integer> buildIndexTable(List<ChecksumPair> checksumPairs) {
         Map<Integer, Integer> indexTable = new HashMap<Integer, Integer>();
 //        WeakChecksumComparator comparator = new WeakChecksumComparator();
 //        Collections.sort(checksumPairs, comparator);
@@ -107,7 +107,7 @@ public class Util {
      * @param checksumPairs List of unsorted checkSumPairs
      * @return list of sorted checkSumPairs
      */
-    public List<ChecksumPair> sortSignaturesFromReceiver(List<ChecksumPair> checksumPairs){
+    public static List<ChecksumPair> sortSignaturesFromReceiver(List<ChecksumPair> checksumPairs){
         WeakChecksumComparator comparator = new WeakChecksumComparator();
         Collections.sort(checksumPairs, comparator);
         return checksumPairs;
