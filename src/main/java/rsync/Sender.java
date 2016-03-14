@@ -54,7 +54,7 @@ public class Sender {
 //
 //        for (int i = 0; i < byteStream.length; i++){
 //            int byteOffset = i;
-//            int length = byteOffset + Constants.MIN_BLOCK_SIZE - 1;
+//            int length = byteOffset + Constants.MIN_BLOCK_SIZE_TEST - 1;
 //            byte[] block = extractBlock(byteOffset,length,byteStream);
 //            int initialWeakHash = getWeakHash(byteOffset,block.length-1,block);
 //            if (indexTable.containsKey(initialWeakHash)){
@@ -96,7 +96,7 @@ public class Sender {
 //     */
 //    int getWeakHash(int k, int l, byte[] block){
 //        rollingChecksum.update(block, k, l);
-//        return rollingChecksum.getValue();
+//        return rollingChecksum.calculateValue();
 //    }
 
 //    /**

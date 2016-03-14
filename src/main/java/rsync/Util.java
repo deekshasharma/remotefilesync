@@ -22,19 +22,19 @@ public class Util {
     static List<byte[]> splitIntoBlocks(byte[] data) {
         List<byte[]> allBlocks = new ArrayList<byte[]>();
         int len = data.length;
-        if (len <= Constants.MIN_BLOCK_SIZE) {
+        if (len <= Constants.MIN_BLOCK_SIZE_TEST) {
             allBlocks.add(data);
             return allBlocks;
         }
         int j = 0;
-        byte[] block = new byte[Constants.MIN_BLOCK_SIZE];
+        byte[] block = new byte[Constants.MIN_BLOCK_SIZE_TEST];
         for (int i = 0; i < data.length; i++) {
             if (j < block.length) {
                 block[j] = data[i];
                 j++;
             } else {
                 allBlocks.add(block);
-                int size = (((len - i) <= Constants.MIN_BLOCK_SIZE) ? (len - i) : Constants.MIN_BLOCK_SIZE);
+                int size = (((len - i) <= Constants.MIN_BLOCK_SIZE_TEST) ? (len - i) : Constants.MIN_BLOCK_SIZE_TEST);
                 block = new byte[size];
                 j = 0;
                 block[j] = data[i];

@@ -36,7 +36,7 @@ public class Receiver {
 //        //Return all blockSignatures with a weak and strong checksum for each block.
 //        for (byte[] block: allBlocks){
 //            rollingChecksum.update(block,0,block.length);
-//            int weakSignature = rollingChecksum.getValue();
+//            int weakSignature = rollingChecksum.calculateValue();
 //            byte[] strongSignature = md5.getMd5Checksum(block);
 //                    checksumPairs.add(new ChecksumPair(weakSignature,strongSignature));
 //        }
