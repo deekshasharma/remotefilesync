@@ -21,7 +21,7 @@ public class ReconstructionTest {
         List<ChecksumPair> sortedChecksums = Util.sortSignaturesFromReceiver(checksumPairs);
         Map<Integer,Integer> indexTable = Util.buildIndexTable(sortedChecksums);
 
-        String local = "My name is Deeksha Sharma and I study in Santa clara University";
+        String local = "My name is Deeksha Sharma and I love programming";
         byte[] localBytes = local.getBytes();
 
         Matching matching = new Matching();

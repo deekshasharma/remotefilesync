@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Reconstruction {
 
-    private static final String path = "/Users/deeksha/IdeaProjects/remotefilesynchronization/src/main/resources/a.txt";
+    private static final String path = "/tmp/a.txt";
 
     /**
      * Reconstruct the file using the byte literals and matching tokens received from sender

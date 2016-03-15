@@ -48,6 +48,7 @@ public class MatchingTest {
 
         Matching matching = new Matching();
         String actualDelta = matching.calculateDelta(localBytes,sortedChecksums,indexTable);
+        System.out.println("DELTA CALCULATED");
         System.out.println(actualDelta);
 
     }
