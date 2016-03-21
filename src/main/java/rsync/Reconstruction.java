@@ -10,7 +10,6 @@ import java.util.List;
 
 public class Reconstruction {
 
-    private static final String path = "/tmp/a.txt";
 
     /**
      * Reconstruct the file using the byte literals and matching tokens received from sender
@@ -19,7 +18,7 @@ public class Reconstruction {
      */
     public void reconstructFile(String delta,List<byte[]> receiverBlocks){
         try {
-            File file = new File(path);
+            File file = new File(Constants.RECEIVER_FILEPATH);
             if (!file.exists()){
                 file.createNewFile();
             }
