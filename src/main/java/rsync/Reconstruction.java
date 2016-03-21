@@ -14,10 +14,10 @@ public class Reconstruction {
 
     /**
      * Reconstruct the file using the byte literals and matching tokens received from sender
-     * @param literalStream String containing comma separated values of matched tokens and unmatched byte literals
+     * @param delta String containing comma separated values of matched tokens and unmatched byte literals
      * @param receiverBlocks List of byte arrays containing blocks of fixed size
      */
-    public void reconstructFile(String literalStream,List<byte[]> receiverBlocks){
+    public void reconstructFile(String delta,List<byte[]> receiverBlocks){
         try {
             File file = new File(path);
             if (!file.exists()){
@@ -25,7 +25,7 @@ public class Reconstruction {
             }
             FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            String[] literalsArray = literalStream.split(",");
+            String[] literalsArray = delta.split(",");
             for (String literal: literalsArray){
                 if (StringUtils.isNumeric(literal)){
                     byte byteLiteral = Byte.valueOf(literal);
