@@ -8,14 +8,8 @@ import java.util.*;
 
 public class Util {
 
-    public static void main(String[] args) throws FileNotFoundException {
-        String filepath = "./geneticcode.txt";
-        convertToBytes(filepath);
-    }
-
     /**
      * Split the file data into blocks of fixed size
-     *
      * @param data
      * @return List of blocks with same size except the last block.
      */
@@ -48,7 +42,6 @@ public class Util {
 
     /**
      * Convert the file contents to a byte array
-     *
      * @throws FileNotFoundException
      */
     public static byte[] convertToBytes(String filepath) throws FileNotFoundException {
@@ -85,16 +78,16 @@ public class Util {
 
     /**
      * Build the Index table for each checkSumPair of the receiver
-     * @param checksumPairs Pair containing weakChecksum and strongChecksum
+     * @param sortedChecksumPairs Pair containing weakChecksum and strongChecksum
      * @return HashMap containing the key as weak hash and value as first occurrence of the weak hash in
      * the sorted Signatures from the receiver.
      */
-    public static Map<Integer, Integer> buildIndexTable(List<ChecksumPair> checksumPairs) {
+    public static Map<Integer, Integer> buildIndexTable(List<ChecksumPair> sortedChecksumPairs) {
         Map<Integer, Integer> indexTable = new HashMap<Integer, Integer>();
 //        WeakChecksumComparator comparator = new WeakChecksumComparator();
 //        Collections.sort(checksumPairs, comparator);
-        for (int i = 0; i < checksumPairs.size(); i++){
-            int weakSignature = checksumPairs.get(i).getWeakChecksum();
+        for (int i = 0; i < sortedChecksumPairs.size(); i++){
+            int weakSignature = sortedChecksumPairs.get(i).getWeakChecksum();
             if(!indexTable.containsKey(weakSignature)){
                 indexTable.put(weakSignature, i);
             }
