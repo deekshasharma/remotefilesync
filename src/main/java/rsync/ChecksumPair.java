@@ -21,7 +21,6 @@ public class ChecksumPair extends Object {
         this.weakChecksum = weakChecksum;
         this.strongChecksum = strongChecksum;
         this.blockSequenceNumber = blockSequenceNumber;
-//        this.blockOffset = blockOffset;
     }
 
 
